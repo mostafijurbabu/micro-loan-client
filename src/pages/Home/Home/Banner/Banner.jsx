@@ -7,23 +7,68 @@ import bannerImg3 from "../../../../assets/loanimg10.jpg";
 
 const Banner = () => {
   return (
-    <Carousel
-      autoPlay={true}
-      infiniteLoop={true}
-      interval={3000}
-      dynamicHeight={70}
-    >
-      <div>
+    <Carousel autoPlay={true} infiniteLoop={true} interval={3000}>
+      <div className="relative">
         <img className="rounded-xl" src={bannerImg1} />
-        <p className="legend">Legend 1</p>
+        <button
+          className="absolute 
+                       bottom-10 
+                       left-1/2 
+                       -translate-x-1/2 
+                       bg-primary 
+                       text-black
+                       font-bold
+                       text-xl 
+                       w-1/2 
+                       py-3 
+                       rounded-lg 
+                       hover:bg-blue-700 
+                       transition"
+        >
+          Explore Loans
+        </button>
       </div>
       <div>
         <img className="rounded-xl" src={bannerImg2} />
-        <p className="legend">Legend 2</p>
+
+        <button
+          className="absolute 
+                       bottom-10 
+                       left-1/2 
+                       -translate-x-1/2 
+                       bg-primary 
+                       text-black
+                       font-bold
+                       text-xl 
+                       w-1/2 
+                       py-3 
+                       rounded-lg 
+                       hover:bg-blue-700 
+                       transition"
+        >
+          Explore Loans
+        </button>
       </div>
       <div>
         <img className="rounded-xl" src={bannerImg3} />
-        <p className="legend">Legend 3</p>
+
+        <button
+          className="absolute 
+                       bottom-10 
+                       left-1/2 
+                       -translate-x-1/2 
+                       bg-primary 
+                       text-black
+                       font-bold
+                       text-xl 
+                       w-1/2 
+                       py-3 
+                       rounded-lg 
+                       hover:bg-blue-700 
+                       transition"
+        >
+          Explore Loans
+        </button>
       </div>
     </Carousel>
   );
