@@ -12,12 +12,12 @@ const AuthLayout = () => {
         </div>
         <h1 className="text-4xl text-blue-600 font-bold -ms-6">MICROLOAN</h1>
       </div>
-      <div className="flex">
+      <div className="flex items-center">
         <div className="flex-1">
           <Outlet></Outlet>
         </div>
         <div className="flex-1">
-          <img className="w-110 h-110 rounded-full" src={authImage} alt="" />
+          <img className="w-100 h-100 rounded-full" src={authImage} alt="" />
         </div>
       </div>
     </div>

@@ -1,11 +1,12 @@
 import React from "react";
 import loanImg from "../../assets/loanlogo.png";
+import { Link } from "react-router";
 
 const Logo = () => {
   return (
-    <div>
+    <Link to="/">
       <img src={loanImg} alt="" />
-    </div>
+    </Link>
   );
 };
 
