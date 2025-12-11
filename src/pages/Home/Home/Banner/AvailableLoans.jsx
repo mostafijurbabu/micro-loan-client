@@ -1,15 +1,16 @@
 import React from "react";
+import LoanCard from "../../../../Components/loanCard/LoanCard";
 import { useLoaderData } from "react-router";
-import LoanCard from "../../Components/loanCard/LoanCard";
 
-const AllLoans = () => {
-  const data = useLoaderData();
-  // console.log(data);
+const AvailableLoans = ({ loans }) => {
+  const loaderLoans = useLoaderData(); // route-level loader data
+  const data = loans || loaderLoans;
   return (
     <div>
       <div className="text-center">
-        <h2 className="text-4xl font-bold mb-6">All Loans</h2>
+        <h1 className="text-4xl font-bold my-10">Available Loans</h1>
       </div>
+
       <div className="grid grid-cols-2 md:grid-cols-3 gap-3">
         {data.map((loan) => (
           <LoanCard key={loan._id} loan={loan}></LoanCard>
@@ -19,4 +20,4 @@ const AllLoans = () => {
   );
 };
 
-export default AllLoans;
+export default AvailableLoans;

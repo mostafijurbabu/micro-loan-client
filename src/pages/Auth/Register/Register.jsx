@@ -38,14 +38,29 @@ const Register = () => {
           };
           updateUserProfile(userProfile)
             .then(() => {
-              console.log("user profile updated done.");
-              navigate(location?.state || "/");
+              const savedUser = {
+                name: data.name,
+                email: data.email,
+                photoURL: res.data.data.url,
+                role: data.role,
+              };
+
+              axios
+                .post(`${import.meta.env.VITE_API_URL || ""}/users`, savedUser)
+                .then(() => {
+                  navigate(location?.state || "/");
+                })
+                .catch((err) => {
+                  console.error("Failed to save user to DB:", err);
+
+                  navigate(location?.state || "/");
+                });
             })
-            .catch((error) => console.log(error));
+            .catch((error) => console.log("updateUserProfile error:", error));
         });
       })
       .catch((error) => {
-        console.log(error);
+        console.log("registerUser error:", error);
       });
   };
 
@@ -89,6 +104,20 @@ const Register = () => {
           />
           {errors.email?.type === "required" && (
             <p className="text-red-500">Email is required.</p>
+          )}
+
+          {/* role dropdown */}
+          <label className="label">Role</label>
+          <select
+            {...register("role", { required: true })}
+            className="select w-full"
+            defaultValue="borrower"
+          >
+            <option value="borrower">Borrower</option>
+            <option value="manager">Manager</option>
+          </select>
+          {errors.role?.type === "required" && (
+            <p className="text-red-500">Role is required.</p>
           )}
 
           {/* password */}
