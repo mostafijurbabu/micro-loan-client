@@ -5,7 +5,7 @@ import useAuth from "../../hooks/useAuth";
 const LoanDetails = () => {
   const loan = useLoaderData();
   const navigate = useNavigate();
-  const { user, role } = useAuth();
+  const { user } = useAuth();
 
   const handleApply = () => {
     if (!user) return navigate("/login");
