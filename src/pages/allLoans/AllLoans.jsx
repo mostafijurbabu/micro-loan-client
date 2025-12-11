@@ -1,5 +1,5 @@
 import React from "react";
-import { useLoaderData } from "react-router";
+import { useLoaderData } from "react-router-dom";
 import LoanCard from "../../Components/loanCard/LoanCard";
 
 const AllLoans = () => {

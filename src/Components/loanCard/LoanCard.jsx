@@ -1,5 +1,5 @@
 import React from "react";
-import { Link } from "react-router";
+import { Link } from "react-router-dom";
 
 const LoanCard = ({ loan }) => {
   const { _id, loanImage, loanTitle, loanCategory, interest, maxLoanLimit } =
@@ -9,7 +9,7 @@ const LoanCard = ({ loan }) => {
       <figure className="h-48 overflow-hidden">
         <img
           src={loanImage}
-          alt={Text}
+          alt={loanTitle}
           className="w-full h-full object-cover hover:scale-110 transition-transform duration-300"
         />
       </figure>
@@ -33,7 +33,7 @@ const LoanCard = ({ loan }) => {
             </span> */}
           </div>
           <Link
-            to={`/loan-details/${_id}`}
+            to={`/loans/${_id}`}
             className="btn rounded-full bg-linear-to-r from-pink-500 to-red-600 hover:from-red-600 hover:to-pink-500 text-white w-full btn-sm"
           >
             View Details
