@@ -5,7 +5,7 @@ import { Link } from "react-router";
 const Logo = () => {
   return (
     <Link to="/">
-      <img src={loanImg} alt="" />
+      <img className="w-30 h-30" src={loanImg} alt="" />
     </Link>
   );
 };

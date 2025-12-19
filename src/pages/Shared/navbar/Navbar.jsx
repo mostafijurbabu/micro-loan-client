@@ -28,6 +28,14 @@ const Navbar = () => {
       <li>
         <NavLink to="">Contact</NavLink>
       </li>
+
+      {user && (
+        <>
+          <li>
+            <NavLink to="/dashboard/my-loans">My Loans</NavLink>
+          </li>
+        </>
+      )}
     </>
   );
   return (
@@ -59,9 +67,9 @@ const Navbar = () => {
           </ul>
         </div>
         <div className="flex items-center">
-          <div className="w-30 h-30">
+          <span className="w-30 h-30">
             <Logo />
-          </div>
+          </span>
           <h1 className="text-4xl text-blue-600 font-bold -ms-6">MICROLOAN</h1>
         </div>
       </div>

@@ -9,6 +9,12 @@ import LoanDetails from "../Components/loanCard/LoanDetails";
 import AvailableLoans from "../pages/Home/Home/Banner/AvailableLoans";
 import ApplyLoanForm from "../Components/loanCard/ApplyLoanForm";
 import { applyLoanLoader, loanDetailsLoader } from "../loaders/loanLoaders";
+import DashboardLayout from "../layouts/DashboardLayout";
+import MyLoans from "../pages/Dashboard/MyLoans";
+import Payment from "../pages/Dashboard/Payment/Payment";
+import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess";
+import PaymentCancelled from "../pages/Dashboard/Payment/PaymentCancelled";
+import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
 
 export const router = createBrowserRouter([
   {
@@ -53,6 +59,32 @@ export const router = createBrowserRouter([
       {
         path: "register",
         Component: Register,
+      },
+    ],
+  },
+  {
+    path: "dashboard",
+    element: <DashboardLayout></DashboardLayout>,
+    children: [
+      {
+        path: "my-loans",
+        Component: MyLoans,
+      },
+      {
+        path: "payment/:applicationId",
+        Component: Payment,
+      },
+      {
+        path: "payment-history",
+        Component: PaymentHistory,
+      },
+      {
+        path: "payment-success",
+        Component: PaymentSuccess,
+      },
+      {
+        path: "payment-cancelled",
+        Component: PaymentCancelled,
       },
     ],
   },

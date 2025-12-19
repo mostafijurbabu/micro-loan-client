@@ -4,6 +4,7 @@ import useAuth from "../../../hooks/useAuth";
 import { Link, useLocation, useNavigate } from "react-router";
 import SocialLogin from "../SocialLogin/SocialLogin";
 import axios from "axios";
+import useAxiosSecure from "../../../hooks/useAxiosSecure";
 
 const Register = () => {
   const {
@@ -15,52 +16,53 @@ const Register = () => {
   const { registerUser, updateUserProfile } = useAuth();
   const location = useLocation();
   const navigate = useNavigate();
-  console.log("in register", location);
+  const axiosSecure = useAxiosSecure();
 
   const handleRegistration = (data) => {
     const profileImg = data.photo[0];
 
     registerUser(data.email, data.password)
-      .then((result) => {
-        console.log(result.user);
+      .then(() => {
+        // 1. store the image in form data
         const formData = new FormData();
         formData.append("image", profileImg);
+
+        // 2. send the photo to store and get the ul
         const image_API_URL = `https://api.imgbb.com/1/upload?key=${
           import.meta.env.VITE_image_host_key
         }`;
 
         axios.post(image_API_URL, formData).then((res) => {
-          console.log("after image upload", res.data.data.url);
+          const photoURL = res.data.data.url;
 
+          // create user in the database
+          const userInfo = {
+            email: data.email,
+            displayName: data.name,
+            photoURL: photoURL,
+          };
+          axiosSecure.post("/users", userInfo).then((res) => {
+            if (res.data.insertedId) {
+              console.log("user created in the database");
+            }
+          });
+
+          // update user profile to firebase
           const userProfile = {
             displayName: data.name,
-            photoURL: res.data.data.url,
+            photoURL: photoURL,
           };
+
           updateUserProfile(userProfile)
             .then(() => {
-              const savedUser = {
-                name: data.name,
-                email: data.email,
-                photoURL: res.data.data.url,
-                role: data.role,
-              };
-
-              axios
-                .post(`${import.meta.env.VITE_API_URL || ""}/users`, savedUser)
-                .then(() => {
-                  navigate(location?.state || "/");
-                })
-                .catch((err) => {
-                  console.error("Failed to save user to DB:", err);
-
-                  navigate(location?.state || "/");
-                });
+              console.log("user profile updated done.");
+              navigate(location.state || "/");
             })
-            .catch((error) => console.log("updateUserProfile error:", error));
+            .catch((error) => console.log(error));
         });
       })
       .catch((error) => {
-        console.log("registerUser error:", error);
+        console.log(error);
       });
   };
 
