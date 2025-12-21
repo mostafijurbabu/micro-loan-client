@@ -1,6 +1,13 @@
 import React from "react";
-import { FaRegCreditCard } from "react-icons/fa6";
+import { FaHandHoldingUsd } from "react-icons/fa";
+import { FaRegCreditCard, FaUser } from "react-icons/fa6";
+import { FcApprove } from "react-icons/fc";
 import { GiBanknote } from "react-icons/gi";
+import { ImProfile } from "react-icons/im";
+import { MdAssignmentAdd } from "react-icons/md";
+import { PiReadCvLogoBold } from "react-icons/pi";
+import { RiPassPendingFill } from "react-icons/ri";
+import { SiGoogletagmanager } from "react-icons/si";
 import { Link, NavLink, Outlet } from "react-router";
 
 const DashboardLayout = () => {
@@ -92,6 +99,97 @@ const DashboardLayout = () => {
               >
                 <FaRegCreditCard />
                 <span className="is-drawer-close:hidden">Payment History</span>
+              </NavLink>
+            </li>
+            {/* users */}
+            <li>
+              <NavLink
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Users Management"
+                to="/dashboard/users-management"
+              >
+                <FaUser />
+                <span className="is-drawer-close:hidden">Users Management</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="My Profile"
+                to="/dashboard/my-profile"
+              >
+                <ImProfile />
+                <span className="is-drawer-close:hidden">My Profile</span>
+              </NavLink>
+            </li>
+
+            {/* Admin only */}
+            <li>
+              <NavLink
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Admin All Loans"
+                to="/dashboard/admin-all-loans"
+              >
+                <FaHandHoldingUsd />
+                <span className="is-drawer-close:hidden">Admin All Loans</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Admin Loan Application"
+                to="/dashboard/admin-loan-application"
+              >
+                <PiReadCvLogoBold />
+                <span className="is-drawer-close:hidden">
+                  Admin Loan Application
+                </span>
+              </NavLink>
+            </li>
+
+            {/* Manager only */}
+            <li>
+              <NavLink
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Add Loan"
+                to="/dashboard/add-loan"
+              >
+                <MdAssignmentAdd />
+                <span className="is-drawer-close:hidden">Add Loan</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Manage Loans"
+                to="/dashboard/manage-loans"
+              >
+                <SiGoogletagmanager />
+                <span className="is-drawer-close:hidden">Manage Loans</span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Pending Loans"
+                to="/dashboard/pending-loans"
+              >
+                <RiPassPendingFill />
+                <span className="is-drawer-close:hidden">
+                  Pending Applications
+                </span>
+              </NavLink>
+            </li>
+            <li>
+              <NavLink
+                className="is-drawer-close:tooltip is-drawer-close:tooltip-right"
+                data-tip="Approved Loans"
+                to="/dashboard/approved-loans"
+              >
+                <FcApprove />
+                <span className="is-drawer-close:hidden">
+                  Approved Applications
+                </span>
               </NavLink>
             </li>
 

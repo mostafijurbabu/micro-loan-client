@@ -15,6 +15,16 @@ import Payment from "../pages/Dashboard/Payment/Payment";
 import PaymentSuccess from "../pages/Dashboard/Payment/PaymentSuccess";
 import PaymentCancelled from "../pages/Dashboard/Payment/PaymentCancelled";
 import PaymentHistory from "../pages/Dashboard/PaymentHistory/PaymentHistory";
+import UsersManagement from "../pages/Dashboard/UsersManagement/UsersManagement";
+import MyProfile from "../pages/Dashboard/MyProfile";
+import AdminAllLoans from "../pages/Dashboard/AdminAllLoans";
+import AdminLoanApplication from "../pages/Dashboard/AdminLoanApplication";
+import AddLoan from "../pages/Dashboard/AddLoan";
+import ManagerRoute from "./ManagerRoute";
+import ManageLoans from "../pages/Dashboard/ManageLoans";
+import PendingLoans from "../pages/Dashboard/PendingLoans";
+import ApprovedLoans from "../pages/Dashboard/ApprovedLoans";
+import AdminRoute from "./AdminRoute";
 
 export const router = createBrowserRouter([
   {
@@ -85,6 +95,70 @@ export const router = createBrowserRouter([
       {
         path: "payment-cancelled",
         Component: PaymentCancelled,
+      },
+      {
+        path: "my-profile",
+        Component: MyProfile,
+      },
+
+      // Admin
+      {
+        path: "users-management",
+        element: (
+          <AdminRoute>
+            <UsersManagement />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin-all-loans",
+        element: (
+          <AdminRoute>
+            <AdminAllLoans />
+          </AdminRoute>
+        ),
+      },
+      {
+        path: "admin-loan-application",
+        element: (
+          <AdminRoute>
+            <AdminLoanApplication />
+          </AdminRoute>
+        ),
+      },
+
+      // Manager
+      {
+        path: "add-loan",
+        element: (
+          <ManagerRoute>
+            <AddLoan />
+          </ManagerRoute>
+        ),
+      },
+      {
+        path: "manage-loans",
+        element: (
+          <ManagerRoute>
+            <ManageLoans />
+          </ManagerRoute>
+        ),
+      },
+      {
+        path: "pending-loans",
+        element: (
+          <ManagerRoute>
+            <PendingLoans />
+          </ManagerRoute>
+        ),
+      },
+      {
+        path: "approved-loans",
+        element: (
+          <ManagerRoute>
+            <ApprovedLoans />
+          </ManagerRoute>
+        ),
       },
     ],
   },

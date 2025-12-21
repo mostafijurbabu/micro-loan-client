@@ -1,20 +1,26 @@
 import { useQuery } from "@tanstack/react-query";
-import React from "react";
+import React, { useState } from "react";
 import useAuth from "../../hooks/useAuth";
 import useAxiosSecure from "../../hooks/useAxiosSecure";
-import { FiEdit } from "react-icons/fi";
-import { FaMagnifyingGlass, FaTrashCan } from "react-icons/fa6";
+
 import Swal from "sweetalert2";
 import { CiViewTable } from "react-icons/ci";
 import { FcCancel } from "react-icons/fc";
-import { MdPayments } from "react-icons/md";
-import { Link } from "react-router";
+import { MdPayment } from "react-icons/md";
 
 const MyLoans = () => {
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [paymentDetails, setPaymentDetails] = useState(null);
+
   const { user } = useAuth();
   const axiosSecure = useAxiosSecure();
 
-  const { data: applications = [], refetch } = useQuery({
+  const {
+    data: applications = [],
+    isLoading,
+    error,
+    refetch,
+  } = useQuery({
     queryKey: ["applications", user?.email],
     enabled: !!user?.email,
     queryFn: async () => {
@@ -35,10 +41,10 @@ const MyLoans = () => {
       confirmButtonText: "Yes, cancel it!",
     }).then((result) => {
       if (result.isConfirmed) {
-        axiosSecure.delete(`/application/${id}`).then((res) => {
+        axiosSecure.delete(`/applications/${id}`).then((res) => {
           console.log(res.data);
 
-          if (res.data.deletedCount) {
+          if (res.data.deletedCount > 0) {
             refetch();
             Swal.fire({
               title: "Canceled!",
@@ -53,7 +59,7 @@ const MyLoans = () => {
 
   const handlePayment = async (application) => {
     const paymentInfo = {
-      cost: "$10",
+      cost: 10,
       applicationId: application._id,
       userEmail: application.borrowerEmail,
       applicantName: application.firstName,
@@ -62,6 +68,26 @@ const MyLoans = () => {
     const res = await axiosSecure.post("/create-checkout-session", paymentInfo);
     console.log(res.data);
     window.location.href = res.data.url;
+  };
+
+  if (isLoading) {
+    return <p className="text-center">Loading...</p>;
+  }
+
+  if (error) {
+    return <p className="text-center text-red-500">Something went wrong</p>;
+  }
+
+  const handleViewPayment = async (applicationId) => {
+    try {
+      const res = await axiosSecure.get(
+        `/payments/by-application/${applicationId}`
+      );
+      setPaymentDetails(res.data);
+      setIsModalOpen(true);
+    } catch (error) {
+      Swal.fire("Error", "Payment information not found", "error");
+    }
   };
 
   return (
@@ -106,13 +132,60 @@ const MyLoans = () => {
                       Pay
                     </button>
                   ) : (
-                    <span className="badge badge-success text-black">Paid</span>
+                    <button
+                      onClick={() => handleViewPayment(application._id)}
+                      className="badge badge-success text-black cursor-pointer"
+                    >
+                      Paid
+                    </button>
                   )}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
+        {isModalOpen && paymentDetails && (
+          <dialog open className="modal">
+            <div className="modal-box">
+              <h3 className="flex items-center gap-2 font-bold text-lg mb-4">
+                {" "}
+                <MdPayment /> Payment Details
+              </h3>
+
+              <p>
+                <strong>Email:</strong> {paymentDetails.customerEmail}
+              </p>
+              <p>
+                <strong>Transaction ID:</strong> {paymentDetails.transactionId}
+              </p>
+              <p>
+                <strong>Tracking ID:</strong> {paymentDetails.trackingId}
+              </p>
+              <p>
+                <strong>Application ID:</strong> {paymentDetails.applicationId}
+              </p>
+              <p>
+                <strong>Amount:</strong> ${paymentDetails.amount}
+              </p>
+              <p>
+                <strong>Status:</strong> {paymentDetails.paymentStatus}
+              </p>
+              <p>
+                <strong>Paid At:</strong>{" "}
+                {new Date(paymentDetails.paidAt).toLocaleString()}
+              </p>
+
+              <div className="modal-action">
+                <button
+                  onClick={() => setIsModalOpen(false)}
+                  className="btn btn-sm"
+                >
+                  Close
+                </button>
+              </div>
+            </div>
+          </dialog>
+        )}
       </div>
     </div>
   );
