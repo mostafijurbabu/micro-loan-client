@@ -30,7 +30,7 @@ const ApplyLoanForm = () => {
       createdAt: new Date(),
     };
 
-    await fetch("http://localhost:5000/applications", {
+    await fetch("https://yes-omega-two.vercel.app/applications", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(application),

@@ -33,19 +33,31 @@ export const router = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <Home></Home>,
-        loader: () => fetch("http://localhost:5000/loans"),
+        element: <Home />,
+        loader: async () => {
+          const res = await fetch("https://yes-omega-two.vercel.app/loans");
+          return res.json();
+        },
       },
+
       {
         path: "available-loans",
-        element: <AvailableLoans></AvailableLoans>,
-        loader: () => fetch("http://localhost:5000/loans"),
+        element: <AvailableLoans />,
+        loader: async () => {
+          const res = await fetch("https://yes-omega-two.vercel.app/loans");
+          return res.json();
+        },
       },
+
       {
         path: "loans",
-        element: <AllLoans></AllLoans>,
-        loader: () => fetch("http://localhost:5000/loans"),
+        element: <AllLoans />,
+        loader: async () => {
+          const res = await fetch("https://yes-omega-two.vercel.app/loans");
+          return res.json();
+        },
       },
+
       {
         path: "/loans/:id",
         element: <LoanDetails></LoanDetails>,
