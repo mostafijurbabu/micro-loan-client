@@ -25,6 +25,7 @@ import ManageLoans from "../pages/Dashboard/ManageLoans";
 import PendingLoans from "../pages/Dashboard/PendingLoans";
 import ApprovedLoans from "../pages/Dashboard/ApprovedLoans";
 import AdminRoute from "./AdminRoute";
+import ErrorPage from "../pages/ErrorPage/ErrorPage";
 
 export const router = createBrowserRouter([
   {
@@ -54,8 +55,10 @@ export const router = createBrowserRouter([
         element: <AllLoans />,
         loader: async () => {
           const res = await fetch("https://yes-omega-two.vercel.app/loans");
+          if (!res.ok) throw new Error(`HTTP ${res.status}`);
           return res.json();
         },
+        errorElement: <ErrorPage />,
       },
 
       {
