@@ -14,13 +14,14 @@ const Banner = () => {
   };
 
   return (
-    <Carousel autoPlay={true} infiniteLoop={true} interval={3000}>
-      {[bannerImg1, bannerImg2, bannerImg3].map((img, index) => (
-        <div key={index} className="relative">
-          <img className="rounded-xl" src={img} />
-          <button
-            onClick={handleExplore}
-            className="absolute 
+    <div className="p-2">
+      <Carousel autoPlay={true} infiniteLoop={true} interval={3000}>
+        {[bannerImg1, bannerImg2, bannerImg3].map((img, index) => (
+          <div key={index} className="relative">
+            <img className="rounded-xl" src={img} />
+            <button
+              onClick={handleExplore}
+              className="absolute 
                        bottom-10 
                        left-1/2 
                        -translate-x-1/2 
@@ -33,12 +34,13 @@ const Banner = () => {
                        rounded-lg 
                        hover:bg-blue-700 
                        transition"
-          >
-            Explore Loans
-          </button>
-        </div>
-      ))}
-    </Carousel>
+            >
+              Explore Loans
+            </button>
+          </div>
+        ))}
+      </Carousel>
+    </div>
   );
 };
 

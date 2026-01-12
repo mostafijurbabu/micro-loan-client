@@ -1,14 +1,13 @@
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "../layouts/RootLayout";
 import Home from "../pages/Home/Home/Home";
+import AvailableLoans from "../pages/Home/Home/Banner/AvailableLoans";
+import AllLoans from "../pages/allLoans/AllLoans";
+import LoanDetails from "../Components/loanCard/LoanDetails";
+import ApplyLoanForm from "../Components/loanCard/ApplyLoanForm";
 import AuthLayout from "../layouts/AuthLayout";
 import Login from "../pages/Auth/Login/Login";
 import Register from "../pages/Auth/Register/Register";
-import AllLoans from "../pages/allLoans/AllLoans";
-import LoanDetails from "../Components/loanCard/LoanDetails";
-import AvailableLoans from "../pages/Home/Home/Banner/AvailableLoans";
-import ApplyLoanForm from "../Components/loanCard/ApplyLoanForm";
-import { applyLoanLoader, loanDetailsLoader } from "../loaders/loanLoaders";
 import DashboardLayout from "../layouts/DashboardLayout";
 import MyLoans from "../pages/Dashboard/MyLoans";
 import Payment from "../pages/Dashboard/Payment/Payment";
@@ -20,50 +19,41 @@ import MyProfile from "../pages/Dashboard/MyProfile";
 import AdminAllLoans from "../pages/Dashboard/AdminAllLoans";
 import AdminLoanApplication from "../pages/Dashboard/AdminLoanApplication";
 import AddLoan from "../pages/Dashboard/AddLoan";
-import ManagerRoute from "./ManagerRoute";
 import ManageLoans from "../pages/Dashboard/ManageLoans";
 import PendingLoans from "../pages/Dashboard/PendingLoans";
 import ApprovedLoans from "../pages/Dashboard/ApprovedLoans";
+import ManagerRoute from "./ManagerRoute";
 import AdminRoute from "./AdminRoute";
 import ErrorPage from "../pages/ErrorPage/ErrorPage";
+import { homeLoader } from "../pages/Home/Home/homeLoader";
+import { availableLoansLoader } from "../pages/Home/Home/AvailableLoanLoaders";
+import { loanDetailsLoader, applyLoanLoader } from "../loaders/loanLoaders";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     Component: RootLayout,
+    errorElement: <ErrorPage />,
     children: [
-      {
-        index: true,
-        element: <Home />,
-        loader: async () => {
-          const res = await fetch("https://yes-omega-two.vercel.app/loans");
-          return res.json();
-        },
-      },
-
+      { index: true, element: <Home />, loader: homeLoader },
       {
         path: "available-loans",
         element: <AvailableLoans />,
-        loader: async () => {
-          const res = await fetch("https://yes-omega-two.vercel.app/loans");
-          return res.json();
-        },
+        loader: availableLoansLoader,
       },
-
       {
         path: "loans",
         element: <AllLoans />,
         loader: async () => {
-          const res = await fetch("https://yes-omega-two.vercel.app/loans");
-          if (!res.ok) throw new Error(`HTTP ${res.status}`);
+          const res = await fetch(`${BASE_URL}/loans`);
+          if (!res.ok)
+            throw new Response("Failed to load loans", { status: res.status });
           return res.json();
         },
-        errorElement: <ErrorPage />,
       },
-
       {
         path: "/loans/:id",
-        element: <LoanDetails></LoanDetails>,
+        element: <LoanDetails />,
         loader: loanDetailsLoader,
       },
       {
@@ -77,44 +67,20 @@ export const router = createBrowserRouter([
     path: "/",
     Component: AuthLayout,
     children: [
-      {
-        path: "login",
-        Component: Login,
-      },
-      {
-        path: "register",
-        Component: Register,
-      },
+      { path: "login", Component: Login },
+      { path: "register", Component: Register },
     ],
   },
   {
     path: "dashboard",
-    element: <DashboardLayout></DashboardLayout>,
+    element: <DashboardLayout />,
     children: [
-      {
-        path: "my-loans",
-        Component: MyLoans,
-      },
-      {
-        path: "payment/:applicationId",
-        Component: Payment,
-      },
-      {
-        path: "payment-history",
-        Component: PaymentHistory,
-      },
-      {
-        path: "payment-success",
-        Component: PaymentSuccess,
-      },
-      {
-        path: "payment-cancelled",
-        Component: PaymentCancelled,
-      },
-      {
-        path: "my-profile",
-        Component: MyProfile,
-      },
+      { path: "my-loans", Component: MyLoans },
+      { path: "payment/:applicationId", Component: Payment },
+      { path: "payment-history", Component: PaymentHistory },
+      { path: "payment-success", Component: PaymentSuccess },
+      { path: "payment-cancelled", Component: PaymentCancelled },
+      { path: "my-profile", Component: MyProfile },
 
       // Admin
       {

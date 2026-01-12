@@ -1,21 +1,13 @@
+import { BASE_URL } from "../api/baseUrl";
+
 export const loanDetailsLoader = async ({ params }) => {
-  const res = await fetch(
-    `https://yes-omega-two.vercel.app/loans/${params.id}`
-  );
-  if (!res.ok) {
-    throw new Response("Failed to load loan", { status: res.status });
-  }
-  const data = await res.json();
-  return data;
+  const res = await fetch(`${BASE_URL}/loans/${params.id}`);
+  if (!res.ok) throw new Response("Loan not found", { status: 404 });
+  return res.json();
 };
 
 export const applyLoanLoader = async ({ params }) => {
-  const res = await fetch(
-    `https://yes-omega-two.vercel.app/loans/${params.id}`
-  );
-  if (!res.ok) {
-    throw new Response("Failed to load loan for apply", { status: res.status });
-  }
-  const data = await res.json();
-  return data;
+  const res = await fetch(`${BASE_URL}/loans/${params.id}`);
+  if (!res.ok) throw new Response("Unable to apply loan", { status: 404 });
+  return res.json();
 };
