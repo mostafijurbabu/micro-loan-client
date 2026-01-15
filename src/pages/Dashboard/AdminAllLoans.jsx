@@ -124,13 +124,13 @@ const AdminAllLoans = () => {
                 </td>
                 <td className="flex gap-2">
                   <button
-                    className="btn btn-sm bg-red-500 hover:bg-red-600"
+                    className="btn btn-primary btn-sm text-black hover:bg-red-600"
                     onClick={() => handleDeleteLoan(loan._id)}
                   >
                     Delete
                   </button>
                   <button
-                    className="btn btn-sm bg-blue-500 hover:bg-blue-600"
+                    className="btn btn-secondary text-white btn-sm hover:bg-blue-600"
                     onClick={() => openModal(loan)}
                   >
                     Update

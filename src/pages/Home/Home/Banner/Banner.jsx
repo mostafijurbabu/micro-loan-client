@@ -24,15 +24,17 @@ const Banner = () => {
               className="absolute 
                        bottom-10 
                        left-1/2 
-                       -translate-x-1/2 
-                       bg-primary 
+                       -translate-x-1/2
+                       btn 
+                       btn-primary 
                        text-black
                        font-bold
                        text-xl 
                        w-1/2 
                        py-3 
                        rounded-lg 
-                       hover:bg-blue-700 
+                       hover:btn-secondary
+                       hover:text-white 
                        transition"
             >
               Explore Loans

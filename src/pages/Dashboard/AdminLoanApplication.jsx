@@ -77,7 +77,7 @@ const AdminLoanApplication = () => {
                 <td>{app.status}</td>
                 <td>
                   <button
-                    className="btn btn-sm bg-blue-400"
+                    className="btn btn-primary btn-sm text-black"
                     onClick={() => handleViewApplication(app)}
                   >
                     View

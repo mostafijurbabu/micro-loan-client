@@ -52,7 +52,10 @@ const MyProfile = () => {
         </div>
 
         {/* Logout Button */}
-        <button onClick={handleLogout} className="btn btn-error mt-6">
+        <button
+          onClick={handleLogout}
+          className="btn btn-primary text-black px-8 mt-6"
+        >
           Logout
         </button>
       </div>

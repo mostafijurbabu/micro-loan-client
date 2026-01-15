@@ -1,10 +1,20 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Logo from "../../../Components/logo/Logo";
 import { Link, NavLink } from "react-router-dom";
 import useAuth from "../../../hooks/useAuth";
 
 const Navbar = () => {
   const { user, logOut } = useAuth();
+  const [theme, setTheme] = useState(localStorage.getItem("theme") || "light");
+
+  useEffect(() => {
+    document.documentElement.setAttribute("data-theme", theme);
+    localStorage.setItem("theme", theme);
+  }, [theme]);
+
+  const toggleTheme = () => {
+    setTheme(theme === "light" ? "dark" : "light");
+  };
 
   const handleLogOut = () => {
     logOut()
@@ -80,7 +90,16 @@ const Navbar = () => {
       <div className="navbar-center hidden lg:flex">
         <ul className="menu menu-horizontal px-1">{links}</ul>
       </div>
-      <div className="navbar-end">
+      <div className="navbar-end gap-2">
+        <button
+          onClick={toggleTheme}
+          className="btn btn-secondary btn-circle p-6"
+          title="Theme Switch"
+        >
+          {theme === "light" ? "DARK" : "LIGHT"}
+        </button>
+
+        {/* Login / Logout */}
         {user ? (
           <a
             onClick={handleLogOut}

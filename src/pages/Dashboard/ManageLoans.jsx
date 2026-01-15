@@ -169,13 +169,13 @@ const ManageLoans = () => {
                   <td className="p-2">{loan.category || "-"}</td>
                   <td className="p-2 flex gap-2 justify-center">
                     <button
-                      className="text-blue-500 hover:underline"
+                      className="btn btn-primary btn-sm text-black hover:underline"
                       onClick={() => handleEdit(loan)}
                     >
                       Edit
                     </button>
                     <button
-                      className="text-red-500 hover:underline"
+                      className="btn btn-secondary btn-sm text-white hover:underline"
                       onClick={() => handleDelete(loan)}
                     >
                       Delete
